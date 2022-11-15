@@ -1,32 +1,42 @@
 package com.example.techno_shop.service;
 
-////import com.example.techno_shop.exceptions.UserNotFoundException;
-////import com.example.techno_shop.model.Role;
-////import com.example.techno_shop.model.ShopUserDetails;
-//import com.example.techno_shop.model.User;
-////import com.example.techno_shop.repository.RoleRepository;
+//import com.example.techno_shop.exceptions.UserNotFoundException;
+//import com.example.techno_shop.model.Role;
+//import com.example.techno_shop.model.ShopUserDetails;
+import com.example.techno_shop.model.Role;
+import com.example.techno_shop.model.User;
+//import com.example.techno_shop.repository.RoleRepository;
 //import com.example.techno_shop.repository.UserRepository;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.data.domain.Page;
-//import org.springframework.data.domain.PageRequest;
-//import org.springframework.data.domain.Pageable;
-//import org.springframework.data.domain.Sort;
-////import org.springframework.security.core.annotation.AuthenticationPrincipal;
-////import org.springframework.security.crypto.password.PasswordEncoder;
-//import org.springframework.stereotype.Service;
-//
-//import javax.transaction.Transactional;
-//import java.util.List;
-//import java.util.NoSuchElementException;
-//import java.util.Optional;
+//import com.example.techno_shop.repository.UserRepository;
+import com.example.techno_shop.repository.RoleRepository;
+import com.example.techno_shop.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+//import org.springframework.security.core.annotation.AuthenticationPrincipal;
+//import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
-//@Service
-//@Transactional
-//public class UserService {
+import javax.transaction.Transactional;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
+
+@Service
+@Transactional
+public class UserService {
+
 //
-////    public final UserRepository userRepository;
-////    public final PasswordEncoder passwordEncoder;
-////    public final RoleRepository roleRepo;
+    @Autowired
+    private UserRepository userRepo;
+
+
+
+//    public final PasswordEncoder passwordEncoder;
+    @Autowired
+    public RoleRepository roleRepo;
 //
 //    public static final int USERS_PER_PAGE = 10;
 //    public final AuthorityRepository authorityRepository;
@@ -36,15 +46,17 @@ package com.example.techno_shop.service;
 //    }
 
 //    @Autowired
-//    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, RoleRepository roleRepo) {
+//    public UserService(UserRepository userRepository, RoleRepository roleRepo) {
 //        this.userRepository = userRepository;
 //        this.passwordEncoder = passwordEncoder;
 //        this.roleRepo = roleRepo;
 //    }
 
-//    public List<User> listAll(){
-//        return (List<User>) userRepository.findAll();
-//    }
+
+
+    public List<User> listAll(){
+        return (List<User>) userRepo.findAll();
+    }
 //
 //    public Page<User> listByPage(int pageNum, String sortField, String sortDir, String keyword) {
 //        Sort sort = Sort.by(sortField);
@@ -57,12 +69,12 @@ package com.example.techno_shop.service;
 //        return userRepository.findAll(pageable);
 //    }
 
-//    public List<Role> listRoles(){
-//        return (List<Role>) roleRepo.findAll();
-//    }
+    public List<Role> listRoles(){
+        return (List<Role>) roleRepo.findAll();
+    }
 
-//    public void save(User user){
-//        //Прописываем логику для того чтобы при обновлении, если не указан пароль, то он оставался прежним
+    public void save(User user){
+        //Прописываем логику для того чтобы при обновлении, если не указан пароль, то он оставался прежним
 //        boolean isUpdatingUser = (user.getId() != null);
 //        if (isUpdatingUser){
 //            User existingUser = userRepository.findById(user.getId()).get();
@@ -74,9 +86,9 @@ package com.example.techno_shop.service;
 //        }else {
 //            encodePassword(user);
 //        }
-//
-//        userRepository.save(user);
-//    }
+
+        userRepo.save(user);
+    }
 //    private void encodePassword(User user){
 //        String encodedPassword = passwordEncoder.encode(user.getPassword());
 //        user.setPassword(encodedPassword);
@@ -127,4 +139,4 @@ package com.example.techno_shop.service;
 //
 //    }
 
-//}
+}

@@ -18,7 +18,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Rollback(value = false)
-@SpringBootTest
 public class RoleRepositoryTests {
 
     @Autowired
@@ -26,18 +25,21 @@ public class RoleRepositoryTests {
 
     @Test
     public void testCreateFirstRole(){
-        Role roleAdmin = new Role("test");
+        Role roleAdmin = new Role("Админ", "контролирует все");
+
         Role savedRole = repo.save(roleAdmin);
         assertThat(savedRole.getId()).isGreaterThan(0);
     }
 
-//    @Test
-//    public void testCreateRestRoles() {
-//        Role roleSalesperson = new Role("Salesperson");
-//        Role roleEditor = new Role("Editor");
-//        Role roleShipper = new Role("Shipper");
-//        Role roleAssistant = new Role("Assistant");
-//        repo.saveAll(List.of(roleSalesperson, roleEditor, roleShipper, roleAssistant));
-//
-//    }
+    @Test
+    public void testCreateRestRoles() {
+        Role roleSalesperson = new Role("Менеджер по продажам", "контролирует цены "+
+                "клиентов, доставки, заказы");
+        Role roleEditor = new Role("Редактор", "контролирует категории " +
+                "бренды, продукты");
+        Role roleShipper = new Role("Логист", "может обновлять статус заказа");
+        Role roleAssistant = new Role("Ассистент", "оказывает поддержку, отвечает на вопросы и отзывы");
+        repo.saveAll(List.of(roleSalesperson, roleEditor, roleShipper, roleAssistant));
+
+    }
 }

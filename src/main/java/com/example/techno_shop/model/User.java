@@ -1,6 +1,8 @@
 package com.example.techno_shop.model;
 
+import lombok.Data;
 import lombok.NoArgsConstructor;
+
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -9,6 +11,7 @@ import java.util.Set;
 @Entity
 @Table(name="users")
 @NoArgsConstructor
+@Data
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,7 +35,7 @@ public class User {
     private boolean enabled;
 
 
-
+    // так как ролей может быть несколько объявляем set
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name="users_roles",
@@ -42,27 +45,8 @@ public class User {
     private Set<Role> roles = new HashSet<>();
 
 
-
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
-
     public void addRole(Role role) {
         this.roles.add(role);
-    }
-
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
 
@@ -78,51 +62,14 @@ public class User {
         this.password = password;
     }
 
-
-    public String getFirstName() {
-        return firstName;
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", roles=" + roles +
+                '}';
     }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-
-//
-//    @Override
-//    public String toString() {
-//        return "User{" +
-//                "id=" + id +
-//                ", username='" + username + '\'' +
-//                ", password='" + password + '\'' +
-//                ", firstName='" + firstName + '\'' +
-//                ", lastName='" + lastName + '\'' +
-//                ", roles=" + roles +
-//                '}';
-//    }
 }

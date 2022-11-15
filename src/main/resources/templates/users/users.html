@@ -11,9 +11,7 @@
                 <a th:href="@{/users/new}" class="fas fa-plus fa-2x mr-2 icon-violet"></a>
             </div>
 
-            <div th:if="${message != null}" class="alert alert-success text-center">
-                [[${message}]]
-            </div>
+            <div th:if="${message != null}" class="alert alert-success text-center">[[${message}]]</div>
 
 
             <div>
@@ -37,11 +35,13 @@
 
 
 
-            <div class="full-details">
+            <div class="users_information">
                 <table class="table table-hover table-responsive-xl">
                     <thead class="thead-light">
                     <tr>
                         <th th:replace="fragments :: column_link('/users','id', 'ID')"></th>
+
+                        <th th:replace="fragments :: column_link('/users','photos', 'Фото')"></th>
 
                         <th th:replace="fragments :: column_link('/users','username', 'Логин')"></th>
 
@@ -54,21 +54,21 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="user: ${listUsers}">
-                        <td>[[${user.id}]]</td>
-                        <td>[[${user.username}]]</td>
-                        <td>[[${user.firstName}]]</td>
-                        <td>[[${user.lastName}]]</td>
-                        <td>[[${user.roles}]]</td>
-                        <td>
-                            <a class="btn btn-violet" th:href="@{'/users/edit/' + ${user.id}}">Редактировать</a>
-                            &nbsp;
-                            <a class="btn btn-violet link-delete"
-                               th:href="@{'/users/delete/' + ${user.id}}" th:entityId="${user.id}">Удалить
-                            </a>
+                        <tr th:each="user: ${listUsers}">
+                            <td>[[${user.id}]]</td>
+                            <td>[[${user.username}]]</td>
+                            <td>[[${user.firstName}]]</td>
+                            <td>[[${user.lastName}]]</td>
+                            <td>[[${user.roles}]]</td>
+                            <td>
+                                <a class="btn btn-violet" th:href="@{'/users/edit/' + ${user.id}}">Редактировать</a>
+                                &nbsp;
+                                <a class="btn btn-violet link-delete"
+                                   th:href="@{'/users/delete/' + ${user.id}}" th:entityId="${user.id}">Удалить
+                                </a>
 
-                        </td>
-                    </tr>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -90,7 +90,7 @@
                 </nav>
             </div>
 
-            <div th:replace="modal_fragments :: confirm_modal"></div>
+<!--            <div th:replace="modal_fragments :: confirm_modal"></div>-->
             </main>
         </div>
 

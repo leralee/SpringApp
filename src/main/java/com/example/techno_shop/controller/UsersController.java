@@ -9,6 +9,10 @@ package com.example.techno_shop.controller;
 //import org.springframework.data.domain.Page;
 //import org.springframework.data.repository.query.Param;
 //import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import com.example.techno_shop.model.Role;
+import com.example.techno_shop.model.User;
+import com.example.techno_shop.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +24,8 @@ import java.util.List;
 public class UsersController {
 
 
-//    private final UserService service;
+    @Autowired
+    private UserService service;
 //
 //
 //    @Autowired
@@ -30,11 +35,14 @@ public class UsersController {
 
 
 
-//    @GetMapping("/users")
-//    public String listFirstPage(Model model){
-//        model.addAttribute("pageTitle", "Пользователи");
+    @GetMapping("/users")
+    public String listFirstPage(Model model){
+        model.addAttribute("pageTitle", "Пользователи");
+        List<User> listUsers= service.listAll();
+        model.addAttribute("listUsers", listUsers);
 //        return listByPage(1, model, "firstName", "asc", null);
-//    }
+        return "users/users";
+    }
 
 
 
@@ -67,25 +75,26 @@ public class UsersController {
 //        model.addAttribute("keyword", keyword);
 
 //        return "users/users";
-    }
+//    }
+
+    @GetMapping("/users/new")
+    public String newUser(Model model){
+        List<Role> listRoles = service.listRoles();
+        User user = new User();
 //
-//    @GetMapping("/users/new")
-//    public String newUser(Model model){
-//        List<Role> listRoles = service.listRoles();
-//        User user = new User();
-//
-//        model.addAttribute("user", user);
-//        model.addAttribute("listRoles", listRoles);
+        model.addAttribute("user", user);
+        model.addAttribute("listRoles", listRoles);
 //        model.addAttribute("pageTitle", "Добавление нового пользователя");
-//        return "users/user_form";
-//    }
-//
-//    @PostMapping("/users/save")
-//    public String saveUser(@ModelAttribute("user") User user, RedirectAttributes redirectAttributes){
-//        service.save(user);
-//        redirectAttributes.addFlashAttribute("message", "Пользователь сохранен");
-//        return "redirect:/users";
-//    }
+        return "users/user_form";
+    }
+
+
+    @PostMapping("/users/save")
+    public String saveUser(@ModelAttribute("user") User user, RedirectAttributes redirectAttributes){
+        service.save(user);
+        redirectAttributes.addFlashAttribute("message", "Пользователь успешно сохранен");
+        return "redirect:/users";
+    }
 //
 //    @GetMapping("/users/edit/{id}")
 //    public String editUser(@PathVariable(name="id") Integer id,
@@ -140,4 +149,4 @@ public class UsersController {
 
 
 
-//}
+}

@@ -1,6 +1,4 @@
-
-/*.violet-background {background-color: #7386D5}*/
-/*.white {color: white}*/
+@import "users.css";
 
 
 .btn-violet{background-color:#DD2F6E;color: white;}
